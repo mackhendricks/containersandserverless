@@ -56,10 +56,10 @@ Use Case:
 
 We have an application the will be built by a team of 5 people. The development team has selected Python and they have a set of dependencies that should be installed in each persons development environment.
 
-Step 1: Figure out the base image
-Step 2: Setup Python and the Requirements file
-Step 3: Setup ENV variables to allow developers to provide state to the container and/or enable the deployment pipeline
-Step 4: Configure it so that the development team can mount their instance of the repo into the container
+- Step 1: Figure out the base image
+- Step 2: Setup Python and the Requirements file
+- Step 3: Setup ENV variables to allow developers to provide state to the container and/or enable the deployment pipeline
+- Step 4: Configure it so that the development team can mount their instance of the repo into the container
 
 ## Push IT
 
