@@ -66,3 +66,7 @@ We have an application the will be built by a team of 5 people. The development 
 ## Deploy IT 
 
 ## Why Do Any of This? Go Serverless!
+
+## Resources
+
+Serverless Basics: https://serverless-stack.com/chapters/what-is-serverless.html
