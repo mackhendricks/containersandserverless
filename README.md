@@ -2,7 +2,7 @@
 
 ## Prereq's
 
-### Install Docker on MacOS
+### Install Docker 
 
 https://docs.docker.com/get-docker/
 
@@ -48,7 +48,7 @@ docker ps
 
 It only shows you the first 12 digits of the image id for readability purposes
 
-**Let's look at the docker images that was downloaded
+**Let's look at the docker images that was downloaded**
 
 ### Inspect Hello World Dockerfile
 
@@ -67,27 +67,75 @@ You have 3 docker commands in this file
 Keyword|Description
 -------|-----------|
 |**FROM** |tells Docker to use a base image that matches the provided repository and tag. A base image is also called a parent image|
-|**COPY** | copies local files into the docker image
+|**COPY** | copies local files into the docker image |
+|**RUN** | run a command in the container |
+|**ENV** | set an environment variable that can be passed to the container at runtime|
 |**CMD**| provide a default executable and/or arguments to execute when the container starts|
-
-
 
 ### Build Our Own
 
-Use Case: 
+Use Case:
 
-We have an application the will be built by a team of 5 people. The development team has selected Python and they have a set of dependencies that should be installed in each persons development environment.
+We have an application being built by a team of 5 people. The development team has selected Python and they have a set of dependencies that should be installed in each persons development environment.
 
-- Step 1: Figure out the base image
-- Step 2: Setup Python and the Requirements file
-- Step 3: Setup ENV variables to allow developers to provide state to the container and/or enable the deployment pipeline
-- Step 4: Configure it so that the development team can mount their instance of the repo into the container
+- Step 1: Create Requirements File (aka dependencies needed)
 
-## Push IT
+```
+echo flask > requirements.txt
 
-## Deploy IT 
+```
 
-## Why Do Any of This? Go Serverless!
+
+- Step 2: Figure out the base image
+
+
+```
+echo FROM python:3 >> Dockerfile
+```
+
+- Step 3: Copy Requirements File and Other Files Into The Container
+
+```
+RUN mkdir app >> Dockerfile
+echo COPY . /app >> Dockerfile
+RUN pip install -r ./app/requirements.txt >> Dockerfile
+```
+
+- Step 4: Setup ENV variables to allow developers to provide state to the container and/or enable the deployment pipeline
+
+```
+echo ENV SLACK_API_KEY="" >> Dockerfile
+echo ENV DB_USER="" >> Dockerfile
+echo ENV DB_PASS="" >> Dockerfile
+```
+
+
+- Step 5: Specify the Command to Run when the container starts
+
+```
+echo CMD [\"python\", \"./app/app.py\"]  >> Dockerfile
+```
+
+- Step 6: Build It
+
+```
+docker build -t <username>/baseapp .
+```
+
+- Step 7: Run It
+
+```
+docker run -p 8888:5000 <username>/baseapp
+```
+
+## Push it to DockerHub
+
+```
+docker login
+docker push <username>/baseapp
+```
+
+# Why Do Any of This? Go Serverless!
 Create a function that responds to HTTP requests. After running the code locally, deploy it to Azure's serverless platform.
 ### Prereq's
 - [An Azure Account](https://azure.microsoft.com/en-us/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio- )
@@ -115,7 +163,7 @@ This folder contains various files for the project, including configurations fil
 func new --name HttpExample --template "HTTP trigger" --authlevel "anonymous"
 ```
 func new creates a subfolder matching the function name that contains a code file appropriate to the project's chosen language and a configuration file named function.json.
-### Run the function locally 
+### Run the function locally
 1. Run your function by starting the local Azure Functions runtime host from the LocalFunctionProj folder:
 ```
 func start
@@ -132,7 +180,7 @@ Toward the end of the output, the following lines should appear:
 
  ...
 
- 
+
 ```
 2. Copy the URL of your HttpExample function from this output to a browser and append the query string ?name=<YOUR_NAME>, making the full URL like http://localhost:7071/api/HttpExample?name=Functions. The browser should display a message like Hello Functions:
 
@@ -163,7 +211,7 @@ In the previous example, replace <STORAGE_NAME> with a name that is appropriate 
 ```
 az functionapp create --resource-group AzureFunctionsQuickstart-rg --consumption-plan-location eastus --runtime node --runtime-version 12 --functions-version 3 --name <APP_NAME> --storage-account <STORAGE_NAME>
 ```
-In the previous example, replace <STORAGE_NAME> with the name of the account you used in the previous step, and replace <APP_NAME> with a globally unique name appropriate to you. The <APP_NAME> is also the default DNS domain for the function app. 
+In the previous example, replace <STORAGE_NAME> with the name of the account you used in the previous step, and replace <APP_NAME> with a globally unique name appropriate to you. The <APP_NAME> is also the default DNS domain for the function app.
 
 This command creates a function app running in your specified language runtime under the Azure Functions Consumption Plan, which is free for the amount of usage you incur here. The command also provisions an associated Azure Application Insights instance in the same resource group, with which you can monitor your function app and view logs. For more information, see Monitor Azure Functions. The instance incurs no costs until you activate it. It will take a few seconds to create the app.
 
@@ -176,7 +224,7 @@ In the following example, replace <APP_NAME> with the name of your app.
 ```
 func azure functionapp publish <APP_NAME>
 ```
-The publish command shows results similar to the following output 
+The publish command shows results similar to the following output
 ```
 Deployment completed successfully.
 Syncing triggers...
