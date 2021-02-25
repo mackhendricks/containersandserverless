@@ -6,9 +6,9 @@
 
 https://docs.docker.com/get-docker/
 
-## The Basics & Review for Some: 
+## The Basics & Review for Some:
 
-### Hello World 
+### Hello World
 
 **Download Docker Image and Run It**
 
@@ -16,11 +16,11 @@ https://docs.docker.com/get-docker/
 docker run -p 8888:80 mackhendricks/static-site
 ```
 
-**Open a web browswer and point to** 
+**Open a web browswer and point to**
 
-http://localhost:8888
+[http://localhost:8888](http://localhost:8888)
 
-**Kill/Stop the Image**
+**Kill/Stop the Container**
 
 Enter Control-C
 
@@ -30,16 +30,17 @@ Enter Control-C
 docker run -d -p 8888:80 mackhendricks/static-site
 ```
 
-Docker will generated a container ID.  It will look something lke this
+Docker will generate a container ID.  It will look something like this
 
 ```
 3ba42b3f8366e00bf8866b3b863eb3228d97090c81488648d60da5bab00e203
 ```
-**Open a web browswer and point to** 
+**Open a web browswer and point to**
 
-http://localhost:8888
+[http://localhost:8888](http://localhost:8888)
 
-**Lets look at the running image**
+
+**Lets look at the running containers**
 
 ```
 docker ps
@@ -47,7 +48,28 @@ docker ps
 
 It only shows you the first 12 digits of the image id for readability purposes
 
-### Inspect Hello World Container
+**Let's look at the docker images that was downloaded
+
+### Inspect Hello World Dockerfile
+
+```
+FROM nginx
+
+COPY wrapper.sh /
+
+COPY html /usr/share/nginx/html
+
+CMD ["./wrapper.sh"]
+```
+
+You have 3 docker commands in this file
+
+Keyword|Description
+-------|-----------|
+|**FROM** |tells Docker to use a base image that matches the provided repository and tag. A base image is also called a parent image|
+|**COPY** | copies local files into the docker image
+|**CMD**| provide a default executable and/or arguments to execute when the container starts|
+
 
 
 ### Build Our Own
