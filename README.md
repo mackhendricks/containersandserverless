@@ -2,7 +2,7 @@
 
 ## Prereq's
 
-### Install Docker 
+### Install Docker
 
 https://docs.docker.com/get-docker/
 
@@ -16,7 +16,7 @@ https://docs.docker.com/get-docker/
 docker run -p 8888:80 mackhendricks/static-site
 ```
 
-**Open a web browswer and point to**
+**Open a web browser and point to**
 
 [http://localhost:8888](http://localhost:8888)
 
@@ -28,6 +28,12 @@ Enter Control-C
 
 ```
 docker run -d -p 8888:80 mackhendricks/static-site
+```
+
+(Optional) You can name the container by providing the --name option
+
+```
+docker run -d -p 8888:80 --name static-site mackhendricks/static-site
 ```
 
 Docker will generate a container ID.  It will look something like this
